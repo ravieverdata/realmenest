@@ -14,6 +14,7 @@ export class AdminController {
     @Get('users')
     getUsers() {
         return this.adminService.getAllUsers();
+        
     }
 
     @UseGuards(AdminGuard)
