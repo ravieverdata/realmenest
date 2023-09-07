@@ -17,6 +17,7 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // Allow cookies and other credentials
   };
+  
   // Enable CORS with the configured options
   app.enableCors(corsOptions);
 
