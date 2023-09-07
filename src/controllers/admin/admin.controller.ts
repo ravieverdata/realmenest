@@ -27,7 +27,6 @@ export class AdminController {
 	@ApiResponse({ status: 500, description: "Internal server error!" })
     getUsers() {
         return this.adminService.getAllUsers();
-        console.log('racvi sharma');
     }
 
     @UseGuards(AdminGuard)
