@@ -28,7 +28,7 @@ export class AdminGuard implements CanActivate {
       request['user'] = payload;
       
     } catch {
-      throw new UnauthorizedException('Invalid Token');
+      throw new UnauthorizedException('Invalid Token.');
     }
     
     return true;

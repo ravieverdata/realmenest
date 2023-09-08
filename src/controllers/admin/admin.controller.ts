@@ -67,7 +67,7 @@ export class AdminController {
     @ApiResponse({ status: 200, description: "Api success" })
 	@ApiResponse({ status: 422, description: "Bad Request or API error message" })
 	@ApiResponse({ status: 404, description: "Not found!" })
-    @ApiResponse({ status: 401, description: "Incorrect otp or Unautorized" })
+    @ApiResponse({ status: 401, description: "Incorrect otp or Unautorized " })
     async otpverify(@Body() otpDto: OtpDto, @Request() request: Request, @RealIP() ip: string): Promise<{ accessToken: string,  success: boolean}> {
         return this.adminService.otpverify(otpDto.otp, ip, request);
     }

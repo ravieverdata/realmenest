@@ -32,7 +32,7 @@ export class AccesstokenguardGuard implements CanActivate {
       return isValid;
 
     } catch {
-      throw new UnauthorizedException('Invalid Token');
+      throw new UnauthorizedException('Invalid Token.');
     }
 
   }

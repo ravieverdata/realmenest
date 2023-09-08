@@ -189,7 +189,7 @@ export class AdminService {
         } catch (error) {
             // Handle any errors here
             console.error('Error generating OTP token:', error);
-            throw new BadRequestException('Invalid request data');
+            throw new BadRequestException('Invalid request data.');
         }
         
     }
