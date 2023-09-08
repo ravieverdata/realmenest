@@ -32,7 +32,7 @@ export class AccesstokenguardGuard implements CanActivate {
       return isValid;
 
     } catch {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Invalid Token.');
     }
 
   }
@@ -40,7 +40,7 @@ export class AccesstokenguardGuard implements CanActivate {
   private verifyAccessToken(payload: string): boolean {
 
     if(payload === 'otp'){
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Invalid Token');
     }
     return true;
   }

@@ -59,7 +59,7 @@ export class AdminService {
         const md5 = crypto.createHash('md5').update(ps).digest("hex");
 
         if (admin?.ps !== md5) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException('Password is Incorrect');
         }
 
         // check all last login history of user
@@ -189,7 +189,7 @@ export class AdminService {
         } catch (error) {
             // Handle any errors here
             console.error('Error generating OTP token:', error);
-            throw new BadRequestException('Invalid request data');
+            throw new BadRequestException('Invalid request data.');
         }
         
     }
