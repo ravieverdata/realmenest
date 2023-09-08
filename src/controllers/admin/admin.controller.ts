@@ -54,6 +54,7 @@ export class AdminController {
     @ApiResponse({ status: 200, description: "Api success" })
 	@ApiResponse({ status: 422, description: "Bad Request or API error message" })
 	@ApiResponse({ status: 404, description: "Not found!" })
+    @ApiResponse({ status: 401, description: "Incorrect Password or Unautorized" })
     @Post('login')
     async login(@Body() adminDto: AdminDto, @Request() request: Request, @RealIP() ip: string): Promise<{ accessToken: string,  otp: boolean}> {
         return this.adminService.login(adminDto.un, adminDto.ps, ip);
@@ -66,7 +67,7 @@ export class AdminController {
     @ApiResponse({ status: 200, description: "Api success" })
 	@ApiResponse({ status: 422, description: "Bad Request or API error message" })
 	@ApiResponse({ status: 404, description: "Not found!" })
-    @ApiResponse({ status: 401, description: "Incorrect Password!" })
+    @ApiResponse({ status: 401, description: "Incorrect otp or Unautorized" })
     async otpverify(@Body() otpDto: OtpDto, @Request() request: Request, @RealIP() ip: string): Promise<{ accessToken: string,  success: boolean}> {
         return this.adminService.otpverify(otpDto.otp, ip, request);
     }
