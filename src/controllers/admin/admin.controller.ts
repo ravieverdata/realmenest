@@ -71,4 +71,14 @@ export class AdminController {
     async otpverify(@Body() otpDto: OtpDto, @Request() request: Request, @RealIP() ip: string): Promise<{ accessToken: string,  success: boolean}> {
         return this.adminService.otpverify(otpDto.otp, ip, request);
     }
+
+
+    @UseGuards(AdminGuard)
+    @Post('/')
+    @ApiResponse({ status: 200, description: "Api success" })
+	@ApiResponse({ status: 422, description: "Bad Request or API error message" })
+	@ApiResponse({ status: 404, description: "Not found!" })
+    async admindetails(@Request() request: Request): Promise<AdminEntity> {
+        return this.adminService.admindetails(request);
+    }
 }
