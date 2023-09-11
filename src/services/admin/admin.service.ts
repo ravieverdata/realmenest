@@ -26,9 +26,9 @@ export class AdminService {
         { id: 2, name: 'Bob' },
     ];
 
-    findAll(): any[] {
-        return this.users;
-    }
+    // findAll(): any[] {
+    //     return this.users;
+    // }
 
     // findById(id: number): any {
         // return this.users.find(user => user.id === id);
@@ -207,6 +207,16 @@ export class AdminService {
         } catch (error) {
           console.error('Error fetching table data:', error);
         }
+    }
+
+    async admindetails(request: Request): Promise<AdminEntity> {
+        const user = request['user'];
+        const id = user.id;
+        const admin = await this.adminRepository.findOneBy({ id });
+        if (!admin) {
+            throw new NotFoundException(`Admin with ID ${id} not found`);
+        }
+        return admin;
     }
 
 }
