@@ -74,7 +74,8 @@ export class AdminController {
 
 
     @UseGuards(AdminGuard)
-    @Post('/')
+    @UseGuards(AccesstokenguardGuard)
+    @Get('admindetails')
     @ApiResponse({ status: 200, description: "Api success" })
 	@ApiResponse({ status: 422, description: "Bad Request or API error message" })
 	@ApiResponse({ status: 404, description: "Not found!" })
