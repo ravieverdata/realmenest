@@ -29,9 +29,15 @@ export class AdminController {
         return this.adminService.getAllUsers();
     }
 
+
+    // get all admin list 
+    @Get('allusers')
     @UseGuards(AdminGuard)
     @UseGuards(AccesstokenguardGuard)
-    @Get('allusers')
+    @ApiResponse({ status: 200, description: "Api success" })
+	@ApiResponse({ status: 422, description: "Bad Request or API error message" })
+	@ApiResponse({ status: 404, description: "Not found!" })
+	@ApiResponse({ status: 500, description: "Internal server error!" })
     async findAll(@Request() request: Request): Promise<AdminEntity[]> {
         return await this.adminService.getAllUsers();
     }
@@ -41,44 +47,40 @@ export class AdminController {
     //     return await this.adminService.getuser(id);
     // }
 
-    // @Post('login')
-    // async login(@Body() adminDto: AdminDto): Promise<AdminEntity> {
-    //     return await this.adminService.login();
-    // } 
-
-    @Get('test')
-    getUsersold() {
-        return this.adminService.logTableData();
-    }
+    // login first step
 
     @ApiResponse({ status: 200, description: "Api success" })
 	@ApiResponse({ status: 422, description: "Bad Request or API error message" })
 	@ApiResponse({ status: 404, description: "Not found!" })
     @ApiResponse({ status: 401, description: "Incorrect Password or Unautorized" })
+	@ApiResponse({ status: 500, description: "Internal server error!" })
     @Post('login')
     async login(@Body() adminDto: AdminDto, @Request() request: Request, @RealIP() ip: string): Promise<{ accessToken: string,  otp: boolean}> {
         return this.adminService.login(adminDto.un, adminDto.ps, ip);
     }
 
 
-    
+    // otp verification concept
     @UseGuards(AdminGuard)
     @Post('otpverify')
     @ApiResponse({ status: 200, description: "Api success" })
 	@ApiResponse({ status: 422, description: "Bad Request or API error message" })
 	@ApiResponse({ status: 404, description: "Not found!" })
     @ApiResponse({ status: 401, description: "Incorrect otp or Unautorized " })
-    async otpverify(@Body() otpDto: OtpDto, @Request() request: Request, @RealIP() ip: string): Promise<{ accessToken: string,  success: boolean}> {
+    @ApiResponse({ status: 500, description: "Internal server error!" })
+    async otpverify(@Body() otpDto: OtpDto, @Request() request: Request, @RealIP() ip: string): Promise<{ accessToken: string,  success: boolean, user: object}> {
         return this.adminService.otpverify(otpDto.otp, ip, request);
     }
 
 
+    // get login user details
     @UseGuards(AdminGuard)
     @UseGuards(AccesstokenguardGuard)
     @Get('admindetails')
     @ApiResponse({ status: 200, description: "Api success" })
 	@ApiResponse({ status: 422, description: "Bad Request or API error message" })
 	@ApiResponse({ status: 404, description: "Not found!" })
+    @ApiResponse({ status: 500, description: "Internal server error!" })
     async admindetails(@Request() request: Request): Promise<AdminEntity> {
         return this.adminService.admindetails(request);
     }

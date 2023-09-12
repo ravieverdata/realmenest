@@ -125,7 +125,7 @@ export class AdminService {
     }
 
 
-    async otpverify(otp: string, ip: string, request: Request): Promise<{ accessToken: string,  success: boolean}> {
+    async otpverify(otp: string, ip: string, request: Request): Promise<{ accessToken: string,  success: boolean, user: AdminEntity}> {
 
         const user = request['user'];
 
@@ -184,6 +184,7 @@ export class AdminService {
             return {
                 accessToken: otpToken,
                 success: true,
+                user: admincheck,
             };
 
         } catch (error) {
