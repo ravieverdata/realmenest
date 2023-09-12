@@ -36,10 +36,10 @@ export class AdminController {
         return await this.adminService.getAllUsers();
     }
 
-    @Get(':id')
-    async getuser(@Param('id', ParseIntPipe) id: number): Promise<AdminEntity> {
-        return await this.adminService.getuser(id);
-    }
+    // @Get(':id')
+    // async getuser(@Param('id', ParseIntPipe) id: number): Promise<AdminEntity> {
+    //     return await this.adminService.getuser(id);
+    // }
 
     // @Post('login')
     // async login(@Body() adminDto: AdminDto): Promise<AdminEntity> {

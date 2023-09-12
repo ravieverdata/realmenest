@@ -210,6 +210,7 @@ export class AdminService {
     }
 
     async admindetails(request: Request): Promise<AdminEntity> {
+        console.log('hdhdhd');
         const user = request['user'];
         const id = user.id;
         const admin = await this.adminRepository.findOneBy({ id });
