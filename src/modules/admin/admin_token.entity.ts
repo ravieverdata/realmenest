@@ -15,7 +15,7 @@ export class AdminTokenEntity {
     userid: string;
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', nullable: false })
-    created_at: Date;
+    create_at: Date;
 
   // Other columns...
 }
