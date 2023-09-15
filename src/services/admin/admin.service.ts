@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { IntegerType, Repository, MoreThanOrEqual } from 'typeorm';
 import { AdminEntity } from 'src/modules/admin/admin.entity';
 import { AdminLoginHistoryEntity } from 'src/modules/admin/adminloginhistory.entity';
+import { AdminTokenEntity } from 'src/modules/admin/admin_token.entity';
 import * as crypto from 'crypto';
 import { JwtService } from '@nestjs/jwt';
 import { GenerateOtpNumber } from 'src/shared/utility/generate-otp.utility';
@@ -16,6 +17,8 @@ export class AdminService {
         private readonly adminRepository: Repository<AdminEntity>,
         @InjectRepository(AdminLoginHistoryEntity)
         private readonly adminLoginHistoryEntity: Repository<AdminLoginHistoryEntity>,
+        @InjectRepository(AdminTokenEntity)
+        private readonly admintokenentity: Repository<AdminTokenEntity>,
         private jwtService: JwtService,
        // private readonly req: Request // Inject Request
         //private readonly secretKey = '31gkgae9hi2ykg3uuig7i2u'
@@ -111,6 +114,7 @@ export class AdminService {
 
         try {
             const otpToken = await this.jwtService.signAsync(payload, { expiresIn: '10m' });
+
             return {
                 access_token: otpToken,
                 otp: true,
@@ -125,7 +129,7 @@ export class AdminService {
     }
 
 
-    async otpverify(otp: string, ip: string, request: Request): Promise<{ accessToken: string,  success: boolean, user: AdminEntity}> {
+    async otpverify(otp: string, ip: string, request: Request): Promise<{ accessToken: string,  success: boolean, user: AdminEntity, redirect: IntegerType}> {
 
         const user = request['user'];
 
@@ -181,10 +185,18 @@ export class AdminService {
 
         try {
             const otpToken = await this.jwtService.signAsync(payload, { expiresIn: '1d' });
+
+            const token = new AdminTokenEntity();
+            token.token = otpToken;
+            token.unid = admincheck.id;
+            token.userid = admincheck.un;
+            await this.admintokenentity.save(token);
+
             return {
                 accessToken: otpToken,
                 success: true,
                 user: admincheck,
+                redirect:token.id,
             };
 
         } catch (error) {
