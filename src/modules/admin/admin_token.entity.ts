@@ -6,6 +6,9 @@ export class AdminTokenEntity {
     id: number;
 
     @Column({ type: 'text', nullable: true })
+    tokenid: string;
+
+    @Column({ type: 'text', nullable: true })
     token: string;
 
     @Column({ type: 'int', nullable: true })
