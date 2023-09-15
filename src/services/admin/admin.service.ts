@@ -129,12 +129,12 @@ export class AdminService {
     }
 
 
-    async otpverify(otp: string, ip: string, request: Request): Promise<{ accessToken: string,  success: boolean, user: AdminEntity, redirect: IntegerType}> {
+    async otpverify(otp: string, ip: string, request: Request): Promise<{ accessToken: string,  success: boolean, user: AdminEntity, redirect: string}> {
 
         const user = request['user'];
 
         // check in admin
-
+        const columnsToSelect = ['id', 'un', 'ph', 'email', 'permissions', 'ticketcheck', 'whatsappcheck', 'calltomobile', 'calltoclid'];
         const admincheck = await this.adminRepository.findOne({
             where: [
               {
@@ -142,6 +142,7 @@ export class AdminService {
                 un: user.un, // First "OR" condition
               },
             ],
+            
         });
 
         if (!admincheck) {
@@ -186,7 +187,12 @@ export class AdminService {
         try {
             const otpToken = await this.jwtService.signAsync(payload, { expiresIn: '1d' });
 
+            const randomBytes = crypto.randomBytes(Math.ceil(100 / 2));
+            const redirect = randomBytes.toString('hex').slice(0, 100);
+
+
             const token = new AdminTokenEntity();
+            token.tokenid = redirect;
             token.token = otpToken;
             token.unid = admincheck.id;
             token.userid = admincheck.un;
@@ -196,7 +202,7 @@ export class AdminService {
                 accessToken: otpToken,
                 success: true,
                 user: admincheck,
-                redirect:token.id,
+                redirect:redirect,
             };
 
         } catch (error) {
