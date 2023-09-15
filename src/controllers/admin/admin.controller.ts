@@ -7,6 +7,7 @@ import { AdminGuard } from 'src/guards/admin/admin.guard';
 import { ApiHeader, ApiOperation, ApiResponse, ApiTags, ApiBearerAuth, ApiConsumes, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { RealIP } from 'nestjs-real-ip';
 import { AccesstokenguardGuard } from 'src/guards/admin/accesstokenguard/accesstokenguard.guard';
+import { IntegerType } from 'typeorm';
 
 
 @ApiTags('Admin')
@@ -68,7 +69,7 @@ export class AdminController {
 	@ApiResponse({ status: 404, description: "Not found!" })
     @ApiResponse({ status: 401, description: "Incorrect otp or Unautorized " })
     @ApiResponse({ status: 500, description: "Internal server error!" })
-    async otpverify(@Body() otpDto: OtpDto, @Request() request: Request, @RealIP() ip: string): Promise<{ accessToken: string,  success: boolean, user: object}> {
+    async otpverify(@Body() otpDto: OtpDto, @Request() request: Request, @RealIP() ip: string): Promise<{ accessToken: string,  success: boolean, user: object, redirect: IntegerType}> {
         return this.adminService.otpverify(otpDto.otp, ip, request);
     }
 
