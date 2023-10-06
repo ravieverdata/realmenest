@@ -20,8 +20,6 @@ export class AdminService {
         @InjectRepository(AdminTokenEntity)
         private readonly admintokenentity: Repository<AdminTokenEntity>,
         private jwtService: JwtService,
-       // private readonly req: Request // Inject Request
-        //private readonly secretKey = '31gkgae9hi2ykg3uuig7i2u'
       ) {}
 
     private users = [
@@ -110,7 +108,7 @@ export class AdminService {
         // GenerateOtpNumber. access token for otp only for 10 min.
         
 
-        const payload = { id: admin.id, un: admin.un, tokentype: 'otp' };
+        const payload = { id: admin.id, un: admin.un, login: false };
 
         try {
             const otpToken = await this.jwtService.signAsync(payload, { expiresIn: '10m' });
@@ -182,7 +180,7 @@ export class AdminService {
 
         // generate the final token for access the application
 
-        const payload = { id: admincheck.id, un: admincheck.un, phone: admincheck.ph, email: admincheck.email, tokentype: 'login' };
+        const payload = { id: admincheck.id, un: admincheck.un, phone: admincheck.ph, email: admincheck.email, login: true };
 
         try {
             const otpToken = await this.jwtService.signAsync(payload, { expiresIn: '1d' });

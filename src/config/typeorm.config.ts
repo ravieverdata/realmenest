@@ -5,16 +5,17 @@ import { TypeOrmModuleOptions} from '@nestjs/typeorm'
 //const dbConfig = config.get('db');
 
 export const typeOrmConfig: TypeOrmModuleOptions={
+   // name: 'primary',
     type: 'mysql',
-    host: process.env.DATABASE_HOST,
-    port: parseInt(process.env.DATABASE_PORT, 10),
+    host: 'localhost',
+    port: 3306,
     username: 'root',
     password: '',
     database: 'everdata_realme',
     //logging:true,
     cache: true,
     entities: ["dist/**/*.entity{.ts,.js}"],
-    synchronize: parseBoolean(process.env.Typeorm_Sync),
+    synchronize: true,
 }
 
 

@@ -13,7 +13,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   
   const corsOptions: CorsOptions = {
-    origin: 'http://localhost:3000', // Replace with the URL of your frontend
+    origin: ['http://localhost:3000', 'http://localhost:4004', ], // Replace with the URL of your frontend
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // Allow cookies and other credentials
   };
@@ -31,7 +31,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-
+  app.setGlobalPrefix('v1');
+  
   await app.listen(4002);
 }
 bootstrap();
