@@ -18,28 +18,27 @@ export class AccesstokenguardGuard implements CanActivate {
       const payload =  await this.jwtService.verifyAsync(
         token,
         {
-          secret: 'Ed2112@2112199863899391gddjgjgjbjdg'
+          secret: process.env.JWT_SECRET
         }
       );
       // 💡 We're assigning the payload to the request object here
       // so that we can access it in our route handlers
       request['user'] = payload;
 
-      console.log(payload.tokentype, "testing");
-
-      const isValid = this.verifyAccessToken(payload.tokentype);
+      const isValid = this.verifyAccessToken(payload.login);
 
       return isValid;
 
     } catch {
       throw new UnauthorizedException('Invalid Token.');
     }
+    
+    return true;
 
   }
 
-  private verifyAccessToken(payload: string): boolean {
-
-    if(payload === 'otp'){
+  private verifyAccessToken(payload: boolean): boolean {
+    if(payload === false){
       throw new UnauthorizedException('Invalid Token');
     }
     return true;
@@ -49,5 +48,6 @@ export class AccesstokenguardGuard implements CanActivate {
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
     return type === 'Bearer' ? token : undefined;
   }
+
   
 }

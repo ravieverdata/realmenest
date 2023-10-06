@@ -36,8 +36,8 @@ export class AdminEntity {
   @Column({ length: 25, nullable: false })
   ticketcheck: string;
 
-  @Column({ enum: ['true', 'false'], default: 'false', nullable: false })
-  whatsappcheck: string;
+  // @Column({ enum: ['true', 'false'], default: 'false', nullable: false })
+  // whatsappcheck: string;
 
   @Column({ length: 255, nullable: false })
   acmanagername: string;

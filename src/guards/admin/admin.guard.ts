@@ -20,7 +20,7 @@ export class AdminGuard implements CanActivate {
       const payload = await this.jwtService.verifyAsync(
         token,
         {
-          secret: 'Ed2112@2112199863899391gddjgjgjbjdg'
+          secret: process.env.JWT_SECRET
         }
       );
       // 💡 We're assigning the payload to the request object here
@@ -34,6 +34,7 @@ export class AdminGuard implements CanActivate {
     return true;
 
   }
+
 
   private extractTokenFromHeader(request: Request): string | undefined {
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
