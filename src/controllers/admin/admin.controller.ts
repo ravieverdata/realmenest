@@ -86,27 +86,5 @@ export class AdminController {
     async findAll(@Request() request: Request): Promise<AdminEntity[]> {
         return await this.adminService.getAllUsers();
     }
-
     
-
-    @UseGuards(AccesstokenguardGuard)
-    @Post('clients')
-    async clients(@Body() postData: any): Promise<any> {
-
-        try {
-
-            const response = await axios.post('http://localhost:3006/client', postData);
-
-            if (response.status >= 400) {
-                throw new HttpException(response.data, response.status);
-            }
-
-            return response.data;
-
-        } catch (error) {
-
-            throw new HttpException({ message: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
-            
-        }
-    }
 }
