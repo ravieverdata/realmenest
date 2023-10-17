@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AdminModule } from './modules/admin/admin.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { Microservicemodule } from './modules/microservice/microservice.module';
+import { HostingController } from './controllers/microservice/hosting/hosting.controller';
 import configuration from './config/configuration';
 
 
@@ -31,7 +32,7 @@ import configuration from './config/configuration';
     DashboardModule,
     Microservicemodule,
   ],
-  controllers: [],
+  controllers: [HostingController],
   providers: [],
 })
 export class AppModule {}
