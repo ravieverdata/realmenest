@@ -25,7 +25,7 @@ import configuration from './config/configuration';
       //logging:true,
       cache: true,
       entities: ["dist/**/*.entity{.ts,.js}"],
-      synchronize: true,
+      synchronize: false,
     }),
     AdminModule,
     DashboardModule,

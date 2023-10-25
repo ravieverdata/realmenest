@@ -5,10 +5,8 @@ import { AdminDto } from 'src/dtos/admin/admin.dto';
 import { OtpDto } from 'src/dtos/admin/otp.dto';
 import { AdminGuard } from 'src/guards/admin/admin.guard';
 import { ApiHeader, ApiOperation, ApiResponse, ApiTags, ApiBearerAuth, ApiConsumes, ApiUnauthorizedResponse } from '@nestjs/swagger';
-import { RealIP } from 'nestjs-real-ip';
 import { AccesstokenguardGuard } from 'src/guards/admin/accesstokenguard/accesstokenguard.guard';
-import { IntegerType } from 'typeorm';
-import axios from 'axios';
+
 
 
 @ApiTags('Admin')

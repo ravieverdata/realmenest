@@ -27,6 +27,8 @@ export class AccesstokenguardGuard implements CanActivate {
 
       const isValid = this.verifyAccessToken(payload.login);
 
+      request['accesstoken'] = token;
+
       return isValid;
 
     } catch {
@@ -48,6 +50,5 @@ export class AccesstokenguardGuard implements CanActivate {
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
     return type === 'Bearer' ? token : undefined;
   }
-
   
 }
