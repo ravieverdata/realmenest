@@ -9,7 +9,7 @@ import { Request } from 'express';
 @UseGuards(AccesstokenguardGuard)
 export class DomainController {
 
-    // all clients list data 
+    // client domains data 
     @ApiUnauthorizedResponse({ status: 401, description: "Unauthorized Admin" })
 	@ApiOperation({ summary: "All Domains List of client" })
 	@ApiResponse({ status: 200, description: "Api success" })
@@ -18,12 +18,18 @@ export class DomainController {
 	@ApiResponse({ status: 500, description: "Internal server error!" })
     @ApiResponse({ status: 400, description: "Una" })
     @Post()
-    async getClientdomains(@Body() postData: any, @Req() request: Request): Promise<any> {
+    async getClientdomains(@Body() postData: any, @Req() request: Request, @Ip() ip: string): Promise<any> {
 
         const microhost = request['microhost'];
 
         try {
-            const response = await axios.post(`${microhost}/domain/`, postData);
+
+            const headers = {
+                Authorization: `Bearer ${request['accesstoken']}`,
+                'X-User-IP': ip,
+            };
+
+            const response = await axios.post(`${microhost}/domain/`, postData, {headers});
             // Handle the successful response
             return response.data;
 
