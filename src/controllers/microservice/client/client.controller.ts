@@ -62,7 +62,7 @@ export class ClientController {
 	@ApiResponse({ status: 500, description: "Internal server error!" })
     @ApiResponse({ status: 400, description: "Una" })
     @Get(':id')
-    async client(@Param('id', ParseIntPipe) id: number,  @Req() request: Request): Promise<any> {
+    async client(@Param('id', ParseIntPipe) id: number,  @Req() request: Request,  @Ip() ip: string): Promise<any> {
 
         if (isNaN(id)) {
             // Return a BadRequestException with a custom error message for invalid 'id'
@@ -70,8 +70,15 @@ export class ClientController {
         }
 
         const microhost = request['microhost'];
+
         try {
-            const response = await axios.get(`${microhost}/client/${id}`);
+
+            const headers = {
+                Authorization: `Bearer ${request['accesstoken']}`,
+                'X-User-IP': ip,
+            };
+
+            const response = await axios.get(`${microhost}/client/${id}`, {headers});
             // Handle the successful response
             return response.data;
 
@@ -102,7 +109,7 @@ export class ClientController {
 	@ApiResponse({ status: 500, description: "Internal server error!" })
     @ApiResponse({ status: 400, description: "Una" })
     @Get('loginhistory/:id')
-    async loginhistory(@Param('id', ParseIntPipe) id: number,  @Req() request: Request): Promise<any> {
+    async loginhistory(@Param('id', ParseIntPipe) id: number,  @Req() request: Request, @Ip() ip: string): Promise<any> {
 
         if (isNaN(id)) {
             // Return a BadRequestException with a custom error message for invalid 'id'
@@ -110,8 +117,15 @@ export class ClientController {
         }
 
         const microhost = request['microhost'];
+
         try {
-            const response = await axios.get(`${microhost}/client/loginhistory/${id}`);
+
+            const headers = {
+                Authorization: `Bearer ${request['accesstoken']}`,
+                'X-User-IP': ip,
+            };
+
+            const response = await axios.get(`${microhost}/client/loginhistory/${id}`, {headers});
             // Handle the successful response
             return response.data;
 
