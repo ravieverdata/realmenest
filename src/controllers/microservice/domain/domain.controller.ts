@@ -5,25 +5,31 @@ import axios from 'axios';
 import { Request } from 'express';
 
 
-@Controller('microservice/hosting')
+@Controller('microservice/domain')
 @UseGuards(AccesstokenguardGuard)
-export class HostingController {
+export class DomainController {
 
-    // all clients list data 
+    // client domains data 
     @ApiUnauthorizedResponse({ status: 401, description: "Unauthorized Admin" })
-	@ApiOperation({ summary: "All Hostings List of client" })
+	@ApiOperation({ summary: "All Domains List of client" })
 	@ApiResponse({ status: 200, description: "Api success" })
 	@ApiResponse({ status: 422, description: "Bad Request or API error message" })
 	@ApiResponse({ status: 404, description: "Not found!" })
 	@ApiResponse({ status: 500, description: "Internal server error!" })
     @ApiResponse({ status: 400, description: "Una" })
     @Post()
-    async getClienthostings(@Body() postData: any, @Req() request: Request): Promise<any> {
+    async getClientdomains(@Body() postData: any, @Req() request: Request, @Ip() ip: string): Promise<any> {
 
         const microhost = request['microhost'];
 
         try {
-            const response = await axios.post(`${microhost}/hosting/`, postData);
+
+            const headers = {
+                Authorization: `Bearer ${request['accesstoken']}`,
+                'X-User-IP': ip,
+            };
+
+            const response = await axios.post(`${microhost}/domain/`, postData, {headers});
             // Handle the successful response
             return response.data;
 
@@ -43,17 +49,19 @@ export class HostingController {
     }
 
 
-    // particular client hosting domain names data 
+
+
+    // particular client domain names data 
 
     @ApiUnauthorizedResponse({ status: 401, description: "Unauthorized Admin" })
-	@ApiOperation({ summary: "All Hostings Domains List of client" })
+	@ApiOperation({ summary: "All Domains List of client" })
 	@ApiResponse({ status: 200, description: "Api success" })
 	@ApiResponse({ status: 422, description: "Bad Request or API error message" })
 	@ApiResponse({ status: 404, description: "Not found!" })
 	@ApiResponse({ status: 500, description: "Internal server error!" })
     @ApiResponse({ status: 400, description: "Una" })
-    @Get('allhostings/:user')
-    async getClientallhostings(@Param('user', ParseIntPipe) user: any, @Req() request: Request, @Ip() ip: string): Promise<any> {
+    @Get('alldomains/:user')
+    async getClientalldomains(@Param('user', ParseIntPipe) user: any, @Req() request: Request, @Ip() ip: string): Promise<any> {
 
         if (isNaN(user)) {
             // Return a BadRequestException with a custom error message for invalid 'id'
@@ -69,7 +77,7 @@ export class HostingController {
                 'X-User-IP': ip,
             };
 
-            const response = await axios.get(`${microhost}/hosting/allhostings/${user}`, {headers});
+            const response = await axios.get(`${microhost}/domain/alldomains/${user}`, {headers});
             // Handle the successful response
             return response.data;
 
@@ -90,17 +98,17 @@ export class HostingController {
 
 
 
-    // particular hosting data of client 
+    // particular domain data of client domain 
 
     @ApiUnauthorizedResponse({ status: 401, description: "Unauthorized Admin" })
-	@ApiOperation({ summary: "All Hosting List of client" })
+	@ApiOperation({ summary: "All Domains List of client" })
 	@ApiResponse({ status: 200, description: "Api success" })
 	@ApiResponse({ status: 422, description: "Bad Request or API error message" })
 	@ApiResponse({ status: 404, description: "Not found!" })
 	@ApiResponse({ status: 500, description: "Internal server error!" })
     @ApiResponse({ status: 400, description: "Una" })
     @Get(':user/:id?')
-    async getClienthosting(@Req() request: Request, @Ip() ip: string, @Param('user', ParseIntPipe) user: number, @Param('id') id?: number): Promise<any> {
+    async getClientdomain(@Req() request: Request, @Ip() ip: string, @Param('user', ParseIntPipe) user: number, @Param('id') id?: number): Promise<any> {
 
         if (isNaN(user)) {
             // Return a BadRequestException with a custom error message for invalid 'id'
@@ -116,7 +124,7 @@ export class HostingController {
                 'X-User-IP': ip,
             };
 
-            const response = await axios.get(`${microhost}/hosting/${user}/${id}`, {headers});
+            const response = await axios.get(`${microhost}/domain/${user}/${id}`, {headers});
             // Handle the successful response
             return response.data;
 
@@ -134,7 +142,6 @@ export class HostingController {
             }
         }
     }
-
 
 
 }
