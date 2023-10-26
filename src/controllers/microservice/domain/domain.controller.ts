@@ -48,9 +48,6 @@ export class DomainController {
         }
     }
 
-
-
-
     // particular client domain names data 
 
     @ApiUnauthorizedResponse({ status: 401, description: "Unauthorized Admin" })
@@ -142,6 +139,4 @@ export class DomainController {
             }
         }
     }
-
-
 }
