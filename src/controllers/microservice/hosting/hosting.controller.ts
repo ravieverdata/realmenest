@@ -9,7 +9,7 @@ import { Request } from 'express';
 @UseGuards(AccesstokenguardGuard)
 export class HostingController {
 
-    // all clients list data 
+    // all hostings data 
     @ApiUnauthorizedResponse({ status: 401, description: "Unauthorized Admin" })
 	@ApiOperation({ summary: "All Hostings List of client" })
 	@ApiResponse({ status: 200, description: "Api success" })
