@@ -18,12 +18,18 @@ export class HostingController {
 	@ApiResponse({ status: 500, description: "Internal server error!" })
     @ApiResponse({ status: 400, description: "Una" })
     @Post()
-    async getClienthostings(@Body() postData: any, @Req() request: Request): Promise<any> {
+    async getClienthostings(@Body() postData: any, @Req() request: Request, @Ip() ip: string): Promise<any> {
 
         const microhost = request['microhost'];
 
         try {
-            const response = await axios.post(`${microhost}/hosting/`, postData);
+
+            const headers = {
+                Authorization: `Bearer ${request['accesstoken']}`,
+                'X-User-IP': ip,
+            };
+
+            const response = await axios.post(`${microhost}/hosting/`, postData, {headers});
             // Handle the successful response
             return response.data;
 
