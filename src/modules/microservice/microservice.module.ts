@@ -3,14 +3,15 @@ import { VerifyserviceMiddleware } from 'src/middleware/microservice/verifyservi
 import { ClientController } from 'src/controllers/microservice/client/client.controller';
 import { HostingController } from 'src/controllers/microservice/hosting/hosting.controller';
 import { DomainController } from 'src/controllers/microservice/domain/domain.controller';
+import { BillingController } from 'src/controllers/microservice/billing/billing.controller';
 
 @Module({
-  controllers: [ClientController, HostingController, DomainController],
+  controllers: [ClientController, HostingController, DomainController, BillingController],
 })
 export class Microservicemodule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(VerifyserviceMiddleware)
-      .forRoutes(ClientController, HostingController, DomainController);
+      .forRoutes(ClientController, HostingController, DomainController, BillingController);
   }
 }
