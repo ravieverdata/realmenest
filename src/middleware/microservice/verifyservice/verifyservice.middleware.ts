@@ -4,6 +4,9 @@ import { BadRequestException, Injectable, NestMiddleware } from '@nestjs/common'
 export class VerifyserviceMiddleware implements NestMiddleware {
   use(req: any, res: any, next: () => void) {
 
+    if(!req.header('Connverification')){
+      throw new BadRequestException('Configuration Error For this Request');
+    }
     const decodedName = Buffer.from(req.header('Connverification'), 'base64').toString('utf-8');
     const value = decodedName.toUpperCase();
 
