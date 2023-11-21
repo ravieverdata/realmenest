@@ -108,13 +108,8 @@ export class ClientController {
 	@ApiResponse({ status: 404, description: "Not found!" })
 	@ApiResponse({ status: 500, description: "Internal server error!" })
     @ApiResponse({ status: 400, description: "Una" })
-    @Get('loginhistory/:id/:take?')
-    async loginhistory(@Param('id', ParseIntPipe) id: number,  @Req() request: Request, @Ip() ip: string, @Param('take') take?: number): Promise<any> {
-
-        if (isNaN(id)) {
-            // Return a BadRequestException with a custom error message for invalid 'id'
-            throw new BadRequestException('Invalid ID. Please provide a valid number.');
-        }
+    @Post('loginhistory')
+    async loginhistory(@Body() postData: any, @Req() request: Request, @Ip() ip: string): Promise<any> {
 
         const microhost = request['microhost'];
 
@@ -125,7 +120,7 @@ export class ClientController {
                 'X-User-IP': ip,
             };
 
-            const response = await axios.get(`${microhost}/client/loginhistory/${id}/${take}`, {headers});
+            const response = await axios.post(`${microhost}/client/loginhistory`, postData, {headers});
             // Handle the successful response
             return response.data;
 
