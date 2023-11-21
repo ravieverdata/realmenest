@@ -108,8 +108,8 @@ export class ClientController {
 	@ApiResponse({ status: 404, description: "Not found!" })
 	@ApiResponse({ status: 500, description: "Internal server error!" })
     @ApiResponse({ status: 400, description: "Una" })
-    @Get('loginhistory/:id')
-    async loginhistory(@Param('id', ParseIntPipe) id: number,  @Req() request: Request, @Ip() ip: string): Promise<any> {
+    @Get('loginhistory/:id/:take?')
+    async loginhistory(@Param('id', ParseIntPipe) id: number,  @Req() request: Request, @Ip() ip: string, @Param('take') take?: number): Promise<any> {
 
         if (isNaN(id)) {
             // Return a BadRequestException with a custom error message for invalid 'id'
@@ -125,7 +125,7 @@ export class ClientController {
                 'X-User-IP': ip,
             };
 
-            const response = await axios.get(`${microhost}/client/loginhistory/${id}`, {headers});
+            const response = await axios.get(`${microhost}/client/loginhistory/${id}/${take}`, {headers});
             // Handle the successful response
             return response.data;
 
@@ -245,13 +245,8 @@ export class ClientController {
 	@ApiResponse({ status: 404, description: "Not found!" })
 	@ApiResponse({ status: 500, description: "Internal server error!" })
     @ApiResponse({ status: 400, description: "Una" })
-    @Get('clientnotes/:id')
-    async clientnotes(@Param('id', ParseIntPipe) id: number,  @Req() request: Request, @Ip() ip: string): Promise<any> {
-
-        if (isNaN(id)) {
-            // Return a BadRequestException with a custom error message for invalid 'id'
-            throw new BadRequestException('Invalid ID. Please provide a valid number.');
-        }
+    @Post('clientnotes')
+    async clientnotes(@Body() postData: any, @Req() request: Request, @Ip() ip: string): Promise<any> {
 
         const microhost = request['microhost'];
 
@@ -262,7 +257,7 @@ export class ClientController {
                 'X-User-IP': ip,
             };
 
-            const response = await axios.get(`${microhost}/client/clientnotes/${id}`, {headers});
+            const response = await axios.post(`${microhost}/client/clientnotes`, postData, {headers});
             // Handle the successful response
             return response.data;
 
