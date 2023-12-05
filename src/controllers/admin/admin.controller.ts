@@ -63,6 +63,19 @@ export class AdminController {
     }
 
 
+    // // Logout
+    // @UseGuards(AdminGuard)
+    // @Post('logout')
+    // @ApiResponse({ status: 200, description: "Api success" })
+	// @ApiResponse({ status: 422, description: "Bad Request or API error message" })
+	// @ApiResponse({ status: 404, description: "Not found!" })
+    // @ApiResponse({ status: 401, description: "Incorrect otp or Unautorized " })
+    // @ApiResponse({ status: 500, description: "Internal server error!" })
+    // async logout(@Body() otpDto: OtpDto, @Request() request: Request, @Ip() ip: string): Promise<{ accessToken: string,  success: boolean, user: object, redirect: string}> {
+    //     return this.adminService.otpverify(otpDto.otp, ip, request);
+    // }
+
+
     // get login user details
     @UseGuards(AccesstokenguardGuard)
     @Get('admindetails')

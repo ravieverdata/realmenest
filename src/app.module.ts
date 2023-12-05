@@ -4,7 +4,6 @@ import { ConfigModule } from '@nestjs/config';
 import { AdminModule } from './modules/admin/admin.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { Microservicemodule } from './modules/microservice/microservice.module';
-import { EmailController } from './controllers/microservice/email/email.controller';
 import configuration from './config/configuration';
 
 

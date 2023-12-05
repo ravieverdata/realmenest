@@ -88,7 +88,7 @@ export class AdminService {
             // Save the changes to the database
             await this.adminLoginHistoryEntity.save(loginhistoryupdate);
         } else {
-        // Handle the case when no records are found
+            // Handle the case when no records are found
             console.log('No records found.');
         }
         
@@ -220,9 +220,9 @@ export class AdminService {
     async logTableData() {
         try {
           const allData = await this.adminRepository.find();
-          console.log('All table data:', allData);
+          //console.log('All table data:', allData);
         } catch (error) {
-          console.error('Error fetching table data:', error);
+          //console.error('Error fetching table data:', error);
         }
     }
 
